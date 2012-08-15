@@ -1,3 +1,5 @@
+import csv
+
 __author__ = 'bingjun'
 #! /usr/local/bin/python
 import pickle
@@ -28,6 +30,18 @@ def save_mean_CI(fitness_mean, fitness_CI, mutator_strength_mean,
     file.close()
 
 
+def save_mean(fitness_mean, mutator_strength_mean,
+              n_dele_mean, n_bene_mean):
+    file = open("state_mean",'w')
+    data = {'fitness_mean':fitness_mean,
+            'mutator_strength_mean':mutator_strength_mean,
+            'n_dele_mean':n_dele_mean,
+            'n_bene_mean':n_bene_mean,
+    }
+    pickle.dump(data, file)
+    file.close()
+
+
 def restore_mean_CI():
     global fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI
     global n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI
@@ -43,6 +57,19 @@ def restore_mean_CI():
     n_dele_CI = data['n_dele_CI']
     n_bene_CI = data['n_bene_CI']
     return fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI
+
+
+def restore_mean():
+    global fitness_mean, mutator_strength_mean
+    global n_dele_mean, n_bene_mean
+    file = open("state_mean",'r')
+    data = pickle.load(file)
+    file.close()
+    fitness_mean = data['fitness_mean']
+    mutator_strength_mean = data['mutator_strength_mean']
+    n_dele_mean = data['n_dele_mean']
+    n_bene_mean = data['n_bene_mean']
+    return fitness_mean, mutator_strength_mean, n_dele_mean, n_bene_mean
 
 
 def save_sex():
@@ -121,21 +148,28 @@ def restore_data():
 def string_to_float(nested_list):
     result = map(list,[[]]*len(nested_list))
     for i in range(0,len(nested_list)):
+#        print(nested_list[i])
         for j in range(0,len(nested_list[i])):
+#            print(nested_list[i][j])
             result[i].append(float(nested_list[i][j]))
     return result
 
 def mean_95CI(list):
     n, mean, std, se, ci = len(list), 0, 0, 0, 0
-    for i in list:
-        mean = mean + i
-    mean /= float(n)
+    mean = cal_mean(list)
     for i in list:
         std += (i - mean) ** 2
-    std = sqrt(std / float(n))
-    se = std / sqrt(float(n))
+    std = sqrt(std / float(n-1))
+    se = std / sqrt(float(n-1))
     ci = 1.96 * se
     return mean, ci
+
+def cal_mean(list):
+	n, mean = len(list), 0
+	for i in list:
+		mean += i
+	mean /= float(n)
+	return mean
 
 def list_mean_CI(nested_list):
     mean_list, CI_list = [], []
@@ -144,6 +178,14 @@ def list_mean_CI(nested_list):
         mean_list.append(mean)
         CI_list.append(ci)
     return mean_list, CI_list
+
+def list_mean(nested_list):
+    mean_list = []
+    for i in nested_list:
+        mean = cal_mean(i)
+        mean_list.append(mean)
+    return mean_list
+
 
 def list_mean_CI_nonNest(list):
     mean_list, CI_list = [], []
@@ -157,3 +199,12 @@ def log_list(list, base):
     for i in list:
         result.append(log(i,base))
     return result
+
+def get_column(file_name, separator, column):
+    file = csv.reader(open(file_name, 'rb'), delimiter=separator, skipinitialspace=True)
+    file.next()
+    data = []
+    for line in file:
+        if line:
+            data.append(line[column])
+    return data
