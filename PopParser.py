@@ -38,20 +38,22 @@ for dir_name in dirs:
 	pop_counter = 0
 	for file_name in files:
 		print(file_name)
-		fitness[pop_counter] = get_column(file_name, "\t", 1)
-#		 print(len(fitness[pop_counter]))
-		mut_rate[pop_counter] = get_column(file_name, "\t", 3)
-		n_dele[pop_counter] = get_column(file_name, "\t", 5)
-		n_bene[pop_counter] = get_column(file_name, "\t", 7)
-		pop_counter += 1
-#		 break
+		file = csv.reader(open(file_name, 'rb'), delimiter="\t", skipinitialspace=True)
+		file.next()
+		for line in file:
+			if line:
+				fitness.append(line[1])
+				mut_rate.append(line[3])
+				n_dele.append(line[5])
+				n_bene.append(line[7])
 
-#	 print(fitness)
+
+		#	 print(fitness)
 	fitness = string_to_float(fitness)
 	mut_rate = string_to_float(mut_rate)
 	n_dele = string_to_float(n_dele)
 	n_bene = string_to_float(n_bene)
- 
+
 	fig = figure(figsize=(10,8))
 	matplotlib.rcParams.update({'font.size': 18})
 	for fitness_data in fitness:
@@ -70,7 +72,7 @@ for dir_name in dirs:
 	xlabel("Generation", fontsize=20)
 	ylabel("Mutator Strength", fontsize=20)
 	fig.savefig("g4000_Mut_Pop_" + dir_name + ".png")
-	   
+
 	fig = figure(figsize=(10,8))
 	matplotlib.rcParams.update({'font.size': 18})
 	for dele_data in n_dele:
@@ -78,7 +80,7 @@ for dir_name in dirs:
 	xlabel("Generation", fontsize=20)
 	ylabel("# of Deleterious mutations", fontsize=20)
 	fig.savefig("g4000_Dele_Pop_" + dir_name + ".png")
-	   
+
 	fig = figure(figsize=(10,8))
 	matplotlib.rcParams.update({'font.size': 18})
 	for bene_data in n_bene:
@@ -86,5 +88,5 @@ for dir_name in dirs:
 	xlabel("Generation", fontsize=20)
 	ylabel("# of Beneficial mutations", fontsize=20)
 	fig.savefig("g4000_Bene_Pop_" + dir_name + ".png")
- 
+
 	os.chdir("..")

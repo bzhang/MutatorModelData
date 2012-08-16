@@ -154,6 +154,13 @@ def string_to_float(nested_list):
 			result[i].append(float(nested_list[i][j]))
 	return result
 
+def string_to_float_list(list):
+	result = []
+	for i in range(0,len(list)):
+		result.append(float(list[i]))
+	return result
+
+
 def mean_95CI(list):
 	n, mean, std, se, ci = len(list), 0, 0, 0, 0
 	mean = cal_mean(list)
