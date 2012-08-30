@@ -12,7 +12,7 @@ data_path = "/Volumes/BigTwins/MutatorModelData/"
 #data_path = "/Users/bingjun/Documents/MutatorModel/"
 # output_path = "/Users/bingjun/Dropbox/MutatorModel/Results/"
 os.chdir(data_path)
-dirs = glob.glob("Core_Expo_M0.0_R0.0_G600000_N1000_BeneMR3.0E-5_DeleMR0.05_BeneE0.03_DeleE0.03_MutStr2_MutMR1.0E-4_AntiMutMR1.0E-5_MutaE0.03")
+dirs = glob.glob("py_default_sims")
 print(os.getcwd())
 print(len(dirs))
 
@@ -27,10 +27,10 @@ for dir_name in dirs:
     os.chdir(dir_name)
     print(dir_name)
     nG = nG_exp.search(dir_name)
-    n_gen = int(nG.group('nG'))
+#    n_gen = int(nG.group('nG'))
+    n_gen = 400
     print(n_gen)
-    # n_gen = 600
-    files = glob.glob("1000_*_pop.txt")
+    files = glob.glob("1000_*.txt")
     # n_file = len(files)
     fitness_pop = map(list,[[]]*n_gen)
     mutator_strength_pop = map(list,[[]]*n_gen)
@@ -48,9 +48,9 @@ for dir_name in dirs:
             record = records[i].split()
 #            print(record)
             fitness_pop[i].append(record[1])
-            mutator_strength_pop[i].append(record[3])
-            n_dele_pop[i].append(record[5])
-            n_bene_pop[i].append(record[7])
+            mutator_strength_pop[i].append(record[2])
+            n_dele_pop[i].append(record[3])
+            n_bene_pop[i].append(record[4])
         file.close()
     # print(fitness_pop)
     # n_file -= 1

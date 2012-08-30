@@ -29,7 +29,7 @@ for dir_name in dirs:
 	mu = mu_exp.search(dir_name)
 	base_mu = float(mu.group('mu'))
 	# n_gen = int(nG.group('nG'))
-	n_gen = 4000
+	n_gen = 400
 	print(base_mu)
 	print(n_gen)
 	if evol_exp.search(dir_name):
@@ -42,14 +42,14 @@ for dir_name in dirs:
 	fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI = restore_mean_CI()
 	# fitness_mean, mutator_strength_mean, n_dele_mean, n_bene_mean = restore_mean()
 
-	fitness_mean[4000:] = []
-	fitness_CI[4000:] = []
-	mutator_strength_mean[4000:] = []
-	mutator_strength_CI[4000:] = []
-	n_dele_mean[4000:] = []
-	n_dele_CI[4000:] = []
-	n_bene_mean[4000:] = []
-	n_bene_CI[4000:] = []
+#	fitness_mean[4000:] = []
+#	fitness_CI[4000:] = []
+#	mutator_strength_mean[4000:] = []
+#	mutator_strength_CI[4000:] = []
+#	n_dele_mean[4000:] = []
+#	n_dele_CI[4000:] = []
+#	n_bene_mean[4000:] = []
+#	n_bene_CI[4000:] = []
 
 	print(len(fitness_mean))
 
@@ -57,11 +57,11 @@ for dir_name in dirs:
 	matplotlib.rcParams.update({'font.size': 18})
 	errorbar(range(1,n_gen+1),fitness_mean,fitness_CI,color='r',capsize=0,ecolor='gray')
 	# yscale('log')
-	title("DeleMu = " + str(base_mu))
+#	title("DeleMu = " + str(base_mu))
 	xlabel("Generation", fontsize=20)
 	ylabel("Fitness", fontsize=20)
 	axvline(x=start,color='g')
-	fig.savefig("g4000_fitness_" + dir_name + ".png")
+	fig.savefig("Fitness_" + dir_name + ".png")
 	# fig.savefig("93_fitness_log_" + dir_name + ".png")
 
 	fig = figure(figsize=(10,8))
@@ -75,7 +75,7 @@ for dir_name in dirs:
 	ylabel("Mutator Strength", fontsize=20)
 	axvline(x=start,color='g')
 #	 fig.savefig("Log2_Mut_" + dir_name + ".png")
-	fig.savefig("g4000_Mut_" + dir_name + ".png")
+	fig.savefig("Mut_" + dir_name + ".png")
 
 	fig = figure(figsize=(10,8))
 	matplotlib.rcParams.update({'font.size': 18})
@@ -86,7 +86,7 @@ for dir_name in dirs:
 	ylabel("# of Deleterious mutations", fontsize=20)
 #	 pylab.ylim([0,25])
 	axvline(x=start,color='g')
-	fig.savefig("g4000_Dele_" + dir_name + ".png")
+	fig.savefig("Dele_" + dir_name + ".png")
 	# fig.savefig("93_Dele_" + dir_name + ".png")
 
 	fig = figure(figsize=(10,8))
@@ -98,7 +98,7 @@ for dir_name in dirs:
 	ylabel("# of Beneficial mutations", fontsize=20)
 #	 pylab.ylim([0,25])
 	axvline(x=start,color='g')
-	fig.savefig("g4000_Bene_" + dir_name + ".png")
+	fig.savefig("Bene_" + dir_name + ".png")
 	# fig.savefig("93_Bene_" + dir_name + ".png")
 
 	fig, ax1 = subplots(figsize=(10,8))
