@@ -24,10 +24,84 @@ def save_mean_CI(fitness_mean, fitness_CI, mutator_strength_mean,
             'fitness_CI':fitness_CI,
             'mutator_strength_CI':mutator_strength_CI,
             'n_dele_CI':n_dele_CI,
-            'n_bene_CI':n_bene_CI
-    }
+            'n_bene_CI':n_bene_CI}
     pickle.dump(data, file)
     file.close()
+
+def save_python_data(fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop, pop_size):
+    file = open("python_state", 'w')
+    data = {'fitness_pop':fitness_pop,
+            'mutator_strength_pop':mutator_strength_pop,
+            'n_dele_pop':n_dele_pop,
+            'n_bene_pop':n_bene_pop,
+            'n_mutator_pop':n_mutator_pop,
+            'n_antimut_pop':n_antimut_pop,
+            'pop_size':pop_size}
+    pickle.dump(data, file)
+    file.close()
+
+def save_python_mean_CI(fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI,
+                        n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI,
+                        n_mutator_mean, n_mutator_CI, n_antimut_mean, n_antimut_CI,
+                        pop_size_mean, pop_size_CI):
+    file = open("python_state_mean_CI", 'w')
+    data = {'fitness_mean':fitness_mean,
+            'mutator_strength_mean':mutator_strength_mean,
+            'n_dele_mean':n_dele_mean,
+            'n_bene_mean':n_bene_mean,
+            'fitness_CI':fitness_CI,
+            'mutator_strength_CI':mutator_strength_CI,
+            'n_dele_CI':n_dele_CI,
+            'n_bene_CI':n_bene_CI,
+            'n_mutator_mean':n_mutator_mean,
+            'n_mutator_CI':n_mutator_CI,
+            'n_antimut_mean':n_antimut_mean,
+            'n_antimut_CI':n_antimut_CI,
+            'pop_size_mean':pop_size_mean,
+            'pop_size_CI':pop_size_CI}
+    pickle.dump(data, file)
+    file.close()
+
+def restore_python_data():
+#    global fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop, pop_size
+    file = open("python_state",'r')
+    data = pickle.load(file)
+    file.close()
+    fitness_pop = data['fitness_pop']
+    mutator_strength_pop = data['mutator_strength_pop']
+    n_dele_pop = data['n_dele_pop']
+    n_bene_pop = data['n_bene_pop']
+    n_mutator_pop = data['n_mutator_pop']
+    n_antimut_pop = data['n_antimut_pop']
+    pop_size = data['pop_size']
+    return fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop, pop_size
+
+def restore_python_mean_CI():
+#    global fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI
+#    global n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI
+    file = open("python_state_mean_CI",'r')
+    data = pickle.load(file)
+    file.close()
+    fitness_mean = data['fitness_mean']
+    mutator_strength_mean = data['mutator_strength_mean']
+    n_dele_mean = data['n_dele_mean']
+    n_bene_mean = data['n_bene_mean']
+    fitness_CI = data['fitness_CI']
+    mutator_strength_CI = data['mutator_strength_CI']
+    n_dele_CI = data['n_dele_CI']
+    n_bene_CI = data['n_bene_CI']
+    n_mutator_mean = data['n_mutator_mean']
+    n_mutator_CI = data['n_mutator_CI']
+    n_antimut_mean = data['n_antimut_mean']
+    n_antimut_CI = data['n_antimut_CI']
+    pop_size_mean = data['pop_size_mean']
+    pop_size_CI = data['pop_size_CI']
+    return fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, \
+           n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI, \
+           n_mutator_mean, n_mutator_CI, n_antimut_mean, n_antimut_CI, pop_size_mean, pop_size_CI
+
+
+
 
 def restore_peak_crash():
     global gen_peak, gen_crash, mutator_peak, mutator_crash, fitness_peak

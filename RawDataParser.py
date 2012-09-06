@@ -12,7 +12,7 @@ data_path = "/Volumes/BigTwins/MutatorModelData/"
 #data_path = "/Users/bingjun/Documents/MutatorModel/"
 # output_path = "/Users/bingjun/Dropbox/MutatorModel/Results/"
 os.chdir(data_path)
-dirs = glob.glob("py_default_sims")
+dirs = glob.glob("gerrish-model_N1000_G60000")
 print(os.getcwd())
 print(len(dirs))
 
@@ -28,14 +28,20 @@ for dir_name in dirs:
     print(dir_name)
     nG = nG_exp.search(dir_name)
 #    n_gen = int(nG.group('nG'))
-    n_gen = 400
+    n_gen = 60000
     print(n_gen)
-    files = glob.glob("1000_*.txt")
+    files = glob.glob("*.txt")
     # n_file = len(files)
     fitness_pop = map(list,[[]]*n_gen)
     mutator_strength_pop = map(list,[[]]*n_gen)
     n_dele_pop = map(list,[[]]*n_gen)
     n_bene_pop = map(list,[[]]*n_gen)
+
+    # Uncomment below for python code
+    n_mutator_pop = map(list,[[]]*n_gen)
+    n_antimut_pop = map(list,[[]]*n_gen)
+    pop_size_pop = map(list,[[]]*n_gen)
+
     for file_name in files:
     # if n_file > 0:
         file = open(file_name,'rb')
@@ -51,6 +57,12 @@ for dir_name in dirs:
             mutator_strength_pop[i].append(record[2])
             n_dele_pop[i].append(record[3])
             n_bene_pop[i].append(record[4])
+
+            # Uncomment below for python code
+            n_mutator_pop[i].append(record[5])
+            n_antimut_pop[i].append(record[6])
+            pop_size_pop[i].append(record[13])
+
         file.close()
     # print(fitness_pop)
     # n_file -= 1
@@ -63,7 +75,13 @@ for dir_name in dirs:
     mutator_strength_pop = string_to_float(mutator_strength_pop)
     n_dele_pop = string_to_float(n_dele_pop)
     n_bene_pop = string_to_float(n_bene_pop)
-    save_data(fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop)
+
+    # Uncomment below for python code
+    n_mutator_pop = string_to_float(n_mutator_pop)
+    n_antimut_pop = string_to_float(n_antimut_pop)
+    pop_size_pop = string_to_float(pop_size_pop)
+#    save_data(fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop)
+
 
     fitness_mean, fitness_CI = list_mean_CI(fitness_pop)
     mutator_strength_mean, mutator_strength_CI = list_mean_CI(mutator_strength_pop)

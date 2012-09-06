@@ -13,7 +13,7 @@ data_path = "/Volumes/BigTwins/MutatorModelData/"
 # data_path = "/Users/bingjun/Documents/MutatorModel/"
 # output_path = "/Users/bingjun/Dropbox/MutatorModel/Results/"
 os.chdir(data_path)
-dirs = glob.glob("Core_Expo_M0.0_R0.0_G600000_N1000_BeneMR3.0E-5_DeleMR0.05_BeneE0.03_DeleE0.03_MutStr2_MutMR1.0E-4_AntiMutMR1.0E-5_MutaE0.03")
+dirs = glob.glob("Core_M0.0_R0.0_G300000_N1000_BeneMR4.5E-5_DeleMR0.075_BeneE0.03_DeleE0.03_MutStr2_MutMR1.0E-4_AntiMutMR1.0E-5_MutaE0.03_EvlFrom600000")
 # dirs = glob.glob("MutCount_M0.0_R0.0_G5000_N500_BeneMR1.0E-4_DeleMR0.01_BeneE1.01_DeleE0.99_MutStr2_InitMutaMR0.0_EvolMutaMR0.01_StartEvol2500_Prob2M0.5_MutaE2")
 # MutCount_M0.0_R1.0_G5000_N500_BeneMR1.0E-4_DeleMR0.01_BeneE1.01_DeleE0.99_MutStr2_MutaMR0.01_Prob2M0.5_MutaE2
 # dirs=glob.glob("MutCount*_R0.0_*_MutaMR0.0_*")
@@ -29,14 +29,14 @@ for dir_name in dirs:
 	mu = mu_exp.search(dir_name)
 	base_mu = float(mu.group('mu'))
 	# n_gen = int(nG.group('nG'))
-	n_gen = 400
+	n_gen = 300
 	print(base_mu)
 	print(n_gen)
-	if evol_exp.search(dir_name):
-		evol = evol_exp.search(dir_name)
-		start = int(evol.group('evol'))
-	else:
-		start = 1
+#	if evol_exp.search(dir_name):
+#		evol = evol_exp.search(dir_name)
+#		start = int(evol.group('evol'))
+#	else:
+#		start = 1
 	os.chdir(dir_name)
 
 	fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI = restore_mean_CI()
@@ -60,7 +60,7 @@ for dir_name in dirs:
 #	title("DeleMu = " + str(base_mu))
 	xlabel("Generation", fontsize=20)
 	ylabel("Fitness", fontsize=20)
-	axvline(x=start,color='g')
+#	axvline(x=start,color='g')
 	fig.savefig("Fitness_" + dir_name + ".png")
 	# fig.savefig("93_fitness_log_" + dir_name + ".png")
 
@@ -73,7 +73,7 @@ for dir_name in dirs:
 	# title("DeleMu = " + str(base_mu))
 	xlabel("Generation", fontsize=20)
 	ylabel("Mutator Strength", fontsize=20)
-	axvline(x=start,color='g')
+#	axvline(x=start,color='g')
 #	 fig.savefig("Log2_Mut_" + dir_name + ".png")
 	fig.savefig("Mut_" + dir_name + ".png")
 
@@ -85,7 +85,7 @@ for dir_name in dirs:
 	xlabel("Generation", fontsize=20)
 	ylabel("# of Deleterious mutations", fontsize=20)
 #	 pylab.ylim([0,25])
-	axvline(x=start,color='g')
+#	axvline(x=start,color='g')
 	fig.savefig("Dele_" + dir_name + ".png")
 	# fig.savefig("93_Dele_" + dir_name + ".png")
 
@@ -97,7 +97,7 @@ for dir_name in dirs:
 	xlabel("Generation", fontsize=20)
 	ylabel("# of Beneficial mutations", fontsize=20)
 #	 pylab.ylim([0,25])
-	axvline(x=start,color='g')
+#	axvline(x=start,color='g')
 	fig.savefig("Bene_" + dir_name + ".png")
 	# fig.savefig("93_Bene_" + dir_name + ".png")
 
@@ -133,10 +133,10 @@ for dir_name in dirs:
 	ax1.yaxis.label.set_color('blue')
 	ax2.tick_params(axis='y', labelcolor='red', color='red')
 	ax2.yaxis.label.set_color('red')
-	axvline(x=start,color='g')
+#	axvline(x=start,color='g')
 	# title("Asexual Populations")
 
-	fig.savefig("g4000_FitMut_log_" + dir_name + ".png")
+	fig.savefig("FitMut_" + dir_name + ".png")
  
 #	  fig = figure(figsize=(10,8))
 #	  matplotlib.rcParams.update({'font.size': 18})
