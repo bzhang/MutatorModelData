@@ -9,7 +9,7 @@ from util import *
 
 data_path = "/Volumes/BigTwins/MutatorModelData/"
 os.chdir(data_path)
-dirs = glob.glob("Core_Expo_M0.0_R0.0_G600000_N1000_BeneMR3.0E-5_DeleMR0.05_BeneE0.03_DeleE0.03_MutStr2_MutMR1.0E-4_AntiMutMR1.0E-5_MutaE0.03")
+dirs = glob.glob("py_N1000_G600k")
 print(os.getcwd())
 print(len(dirs))
 
@@ -20,10 +20,10 @@ evol_exp=re.compile(r"StartEvol(?P<evol>\d+)_")
 for dir_name in dirs:
     nG = nG_exp.search(dir_name)
     mu = mu_exp.search(dir_name)
-    base_mu = float(mu.group('mu'))
-    n_gen = int(nG.group('nG'))
-#    n_gen = 400
-    print(base_mu)
+#    base_mu = float(mu.group('mu'))
+#    n_gen = int(nG.group('nG'))
+    n_gen = 600
+#    print(base_mu)
     print(n_gen)
     os.chdir(dir_name)
 
@@ -34,7 +34,7 @@ for dir_name in dirs:
     mutator_crash = string_to_float_list(mutator_crash)
     fitness_peak = string_to_float_list(fitness_peak)
 
-#    print fitness_peak
+    print gen_crash
 #    exit(0)
 
     mean_gen_peak, std_gen_peak = get_mean_std(gen_peak)
