@@ -6,87 +6,45 @@ __author__ = 'bingjun'
 import pickle
 from math import *
 
-def set_up_axes(ax, xmin, xmax, xstep, ymin, ymax, ystep, \
-    xlabel='', ylabel=''):
-    for loc, spine in ax.spines.items():
-        if loc in ['left','bottom']:
-            spine.set_position(('outward',10)) # outward by 10 points
-        elif loc in ['right','top']:
-            spine.set_color('none') # don't draw spine
-        else:
-            raise ValueError('unknown spine location: %s'%loc)
-    ax.spines['left'].set_linewidth(1.5)
-    ax.spines['bottom'].set_linewidth(1.5)
-    ax.spines['top'].set_visible(False)
-    ax.spines['right'].set_visible(False)
-    xticks = np.arange(xmin, xmax + xstep, xstep)
-    yticks = np.arange(ymin, ymax + ystep, ystep)
-    ax.set_xlim(xmin, xmax)
-    ax.set_xticks(xticks)
-    ax.set_xticklabels(xticks, fontsize=14)
-    ax.set_xlabel(xlabel, fontsize=14)
-    ax.xaxis.set_ticks_position('bottom')
-    ax.set_ylim(ymin, ymax)
-    ax.set_yticks(yticks)
-    ax.set_yticklabels(yticks, fontsize=14)
-    ax.set_ylabel(ylabel, fontsize=14)
-    ax.yaxis.set_ticks_position('left')
-
-def save_data(fitness_pop, mutator_strength_pop,
-              n_dele_pop, n_bene_pop,
-              dele_fitness_effect_pop, bene_fitness_effect_pop):
-    file = open("state", 'w')
-    data = {'fitness_pop': fitness_pop,
-            'mutator_strength_pop': mutator_strength_pop,
-            'n_dele_pop': n_dele_pop,
-            'n_bene_pop': n_bene_pop,
-            'dele_fitness_effect_pop': dele_fitness_effect_pop,
-            'bene_fitness_effect_pop': bene_fitness_effect_pop}
+def save_data(fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop):
+    file = open("state",'w')
+    data = {'fitness_pop':fitness_pop,
+            'mutator_strength_pop':mutator_strength_pop,
+            'n_dele_pop':n_dele_pop,
+            'n_bene_pop':n_bene_pop}
     pickle.dump(data, file)
     file.close()
 
-
-def save_mean_CI(fitness_mean, fitness_CI,
-                mutator_strength_mean, mutator_strength_CI,
-                n_dele_mean, n_dele_CI,
-                n_bene_mean, n_bene_CI,
-                dele_fitness_effect_mean, dele_fitness_effect_ci,
-                bene_fitness_effect_mean, bene_fitness_effect_ci):
-    file = open("state_mean_CI", 'w')
-    data = {'fitness_mean': fitness_mean,
-            'mutator_strength_mean': mutator_strength_mean,
-            'n_dele_mean': n_dele_mean,
-            'n_bene_mean': n_bene_mean,
-            'fitness_CI': fitness_CI,
-            'mutator_strength_CI': mutator_strength_CI,
-            'n_dele_CI': n_dele_CI,
-            'n_bene_CI': n_bene_CI,
-            'dele_fitness_effect_mean': dele_fitness_effect_mean,
-            'dele_fitness_effect_ci': dele_fitness_effect_ci,
-            'bene_fitness_effect_mean': bene_fitness_effect_mean,
-            'bene_fitness_effect_ci': bene_fitness_effect_ci}
+def save_mean_CI(fitness_mean, fitness_CI, mutator_strength_mean,
+                 mutator_strength_CI,n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI):
+    file = open("state_mean_CI",'w')
+    data = {'fitness_mean':fitness_mean,
+            'mutator_strength_mean':mutator_strength_mean,
+            'n_dele_mean':n_dele_mean,
+            'n_bene_mean':n_bene_mean,
+            'fitness_CI':fitness_CI,
+            'mutator_strength_CI':mutator_strength_CI,
+            'n_dele_CI':n_dele_CI,
+            'n_bene_CI':n_bene_CI}
     pickle.dump(data, file)
     file.close()
 
-
-def save_python_data(fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop):
-    # , pop_size
+def save_python_data(fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop, pop_size):
     file = open("python_state", 'w')
     data = {'fitness_pop':fitness_pop,
             'mutator_strength_pop':mutator_strength_pop,
             'n_dele_pop':n_dele_pop,
             'n_bene_pop':n_bene_pop,
             'n_mutator_pop':n_mutator_pop,
-            'n_antimut_pop':n_antimut_pop}
-            # 'pop_size':pop_size}
+            'n_antimut_pop':n_antimut_pop,
+            'pop_size':pop_size}
     pickle.dump(data, file)
     file.close()
 
-
 def save_python_mean_CI(fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI,
                         n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI,
-                        n_mutator_mean, n_mutator_CI, n_antimut_mean, n_antimut_CI):
-# , pop_size_mean, pop_size_CI
+                        n_mutator_mean, n_mutator_CI, n_antimut_mean, n_antimut_CI,
+                        pop_size_mean, pop_size_CI):
     file = open("python_state_mean_CI", 'w')
     data = {'fitness_mean':fitness_mean,
             'mutator_strength_mean':mutator_strength_mean,
@@ -99,12 +57,11 @@ def save_python_mean_CI(fitness_mean, fitness_CI, mutator_strength_mean, mutator
             'n_mutator_mean':n_mutator_mean,
             'n_mutator_CI':n_mutator_CI,
             'n_antimut_mean':n_antimut_mean,
-            'n_antimut_CI':n_antimut_CI}
-    #         'pop_size_mean':pop_size_mean,
-    #         'pop_size_CI':pop_size_CI}
+            'n_antimut_CI':n_antimut_CI,
+            'pop_size_mean':pop_size_mean,
+            'pop_size_CI':pop_size_CI}
     pickle.dump(data, file)
     file.close()
-
 
 def restore_python_data():
 #    global fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop, pop_size
@@ -120,11 +77,10 @@ def restore_python_data():
     pop_size = data['pop_size']
     return fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop, n_mutator_pop, n_antimut_pop, pop_size
 
-
 def restore_python_mean_CI():
 #    global fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI
 #    global n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI
-    file = open("python_state_mean_CI", 'r')
+    file = open("python_state_mean_CI",'r')
     data = pickle.load(file)
     file.close()
     fitness_mean = data['fitness_mean']
@@ -139,13 +95,11 @@ def restore_python_mean_CI():
     n_mutator_CI = data['n_mutator_CI']
     n_antimut_mean = data['n_antimut_mean']
     n_antimut_CI = data['n_antimut_CI']
-    # pop_size_mean = data['pop_size_mean']
-    # pop_size_CI = data['pop_size_CI']
+    pop_size_mean = data['pop_size_mean']
+    pop_size_CI = data['pop_size_CI']
     return fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, \
            n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI, \
-           n_mutator_mean, n_mutator_CI, n_antimut_mean, n_antimut_CI
-           # , pop_size_mean, pop_size_CI
-
+           n_mutator_mean, n_mutator_CI, n_antimut_mean, n_antimut_CI, pop_size_mean, pop_size_CI
 
 def restore_peak_crash():
     global gen_peak, gen_crash, mutator_peak, mutator_crash, fitness_peak
@@ -187,9 +141,7 @@ def save_mean(fitness_mean, mutator_strength_mean,
 def restore_mean_CI():
     global fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI
     global n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI
-    global dele_fitness_effect_mean, dele_fitness_effect_ci
-    global bene_fitness_effect_mean, bene_fitness_effect_ci
-    file = open("state_mean_CI", 'r')
+    file = open("state_mean_CI",'r')
     data = pickle.load(file)
     file.close()
     fitness_mean = data['fitness_mean']
@@ -200,14 +152,7 @@ def restore_mean_CI():
     mutator_strength_CI = data['mutator_strength_CI']
     n_dele_CI = data['n_dele_CI']
     n_bene_CI = data['n_bene_CI']
-    dele_fitness_effect_mean = data['dele_fitness_effect_mean']
-    dele_fitness_effect_ci = data['dele_fitness_effect_ci']
-    bene_fitness_effect_mean = data['bene_fitness_effect_mean']
-    bene_fitness_effect_ci = data['bene_fitness_effect_ci']
-    return fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, \
-           n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI, \
-           dele_fitness_effect_mean, dele_fitness_effect_ci, \
-           bene_fitness_effect_mean, bene_fitness_effect_ci
+    return fitness_mean, fitness_CI, mutator_strength_mean, mutator_strength_CI, n_dele_mean, n_dele_CI, n_bene_mean, n_bene_CI
 
 
 def restore_mean():
@@ -250,7 +195,6 @@ def save_sex():
     }
     pickle.dump(data, file)
     file.close()
-
 
 def restore_sex():
     global fitness_2000_sex, mutator_strength_2000_sex, n_dele_2000_sex, n_bene_2000_sex
@@ -297,16 +241,14 @@ def restore_data():
     n_bene_pop = data['n_bene_pop']
     return fitness_pop, mutator_strength_pop, n_dele_pop, n_bene_pop
 
-
 def string_to_float(nested_list):
     result = map(list,[[]]*len(nested_list))
     for i in range(0,len(nested_list)):
-        # print(nested_list[i])
+#        print(nested_list[i])
         for j in range(0,len(nested_list[i])):
-            # print(nested_list[i][j])
+#            print(nested_list[i][j])
             result[i].append(float(nested_list[i][j]))
     return result
-
 
 def string_to_float_list(list):
     result = []
@@ -320,30 +262,17 @@ def mean_95CI(list):
     mean = get_mean(list)
     for i in list:
         std += (i - mean) ** 2
-
-    if n == 0:
-        ci = float('NaN')
-    elif n == 1:
-        std = sqrt(std / float(n))
-        se = std / sqrt(float(n))
-        ci = 1.96 * se
-    else:
-        std = sqrt(std / float(n - 1))
-        se = std / sqrt(float(n - 1))
-        ci = 1.96 * se
+    std = sqrt(std / float(n-1))
+    se = std / sqrt(float(n-1))
+    ci = 1.96 * se
     return mean, ci
-
 
 def get_mean(list):
     n, mean = len(list), 0
-    if n == 0:
-        mean = float('NaN')
-    else:
-        for i in list:
-            mean += i
-        mean /= float(n)
+    for i in list:
+        mean += i
+    mean /= float(n)
     return mean
-
 
 def get_mean_std(list):
     n, mean, std = len(list), 0, 0
@@ -352,9 +281,8 @@ def get_mean_std(list):
     mean /= float(n)
     for i in list:
         std += (i - mean) ** 2
-    std = sqrt(std / float(n - 1))
+    std = sqrt(std / float(n-1))
     return mean, std
-
 
 def list_mean_CI(nested_list):
     mean_list, CI_list = [], []
@@ -363,7 +291,6 @@ def list_mean_CI(nested_list):
         mean_list.append(mean)
         CI_list.append(ci)
     return mean_list, CI_list
-
 
 def list_mean(nested_list):
     mean_list = []
@@ -380,13 +307,11 @@ def list_mean_CI_nonNest(list):
     CI_list.append(ci)
     return mean_list, CI_list
 
-
 def log_list(list, base):
     result = []
     for i in list:
-        result.append(log(i, base))
+        result.append(log(i,base))
     return result
-
 
 def get_column(file_name, separator, column):
     file = csv.reader(open(file_name, 'rb'), delimiter=separator, skipinitialspace=True)
@@ -398,44 +323,6 @@ def get_column(file_name, separator, column):
     file.close()
     return data
 
-
 def pairwise(t):
     it = iter(t)
     return izip(it, it)
-
-
-def save_mut_props(fixed_bene_fitness_effect, fixed_bene_fitness_zscore, fixed_bene_mut_strength, fixed_dele_fitness_effect, fixed_dele_fitness_zscore, fixed_dele_mut_strength, lost_bene_fitness_effect, lost_bene_fitness_zscore, lost_bene_mut_strength, lost_dele_fitness_effect, lost_dele_fitness_zscore, lost_dele_mut_strength, save_file_name):
-    file = open(save_file_name, 'w')
-    data = {'fixed_bene_fitness_effect': fixed_bene_fitness_effect,
-     'fixed_bene_fitness_zscore': fixed_bene_fitness_zscore,
-     'fixed_bene_mut_strength': fixed_bene_mut_strength,
-     'fixed_dele_fitness_effect': fixed_dele_fitness_effect,
-     'fixed_dele_fitness_zscore': fixed_dele_fitness_zscore,
-     'fixed_dele_mut_strength': fixed_dele_mut_strength,
-     'lost_bene_fitness_effect': lost_bene_fitness_effect,
-     'lost_bene_fitness_zscore': lost_bene_fitness_zscore,
-     'lost_bene_mut_strength': lost_bene_mut_strength,
-     'lost_dele_fitness_effect': lost_dele_fitness_effect,
-     'lost_dele_fitness_zscore': lost_dele_fitness_zscore,
-     'lost_dele_mut_strength': lost_dele_mut_strength}
-    pickle.dump(data, file)
-    file.close()
-
-
-def restore_mut_props(file_name):
-    file = open(file_name,'r')
-    data = pickle.load(file)
-    file.close()
-    fixed_bene_fitness_effect = data['fixed_bene_fitness_effect']
-    fixed_bene_fitness_zscore = data['fixed_bene_fitness_zscore']
-    fixed_bene_mut_strength   = data['fixed_bene_mut_strength']
-    fixed_dele_fitness_effect = data['fixed_dele_fitness_effect']
-    fixed_dele_fitness_zscore = data['fixed_dele_fitness_zscore']
-    fixed_dele_mut_strength   = data['fixed_dele_mut_strength']
-    lost_bene_fitness_effect  = data['lost_bene_fitness_effect']
-    lost_bene_fitness_zscore  = data['lost_bene_fitness_zscore']
-    lost_bene_mut_strength    = data['lost_bene_mut_strength']
-    lost_dele_fitness_effect  = data['lost_dele_fitness_effect']
-    lost_dele_fitness_zscore  = data['lost_dele_fitness_zscore']
-    lost_dele_mut_strength    = data['lost_dele_mut_strength']
-    return fixed_bene_fitness_effect, fixed_bene_fitness_zscore, fixed_bene_mut_strength, fixed_dele_fitness_effect, fixed_dele_fitness_zscore, fixed_dele_mut_strength, lost_bene_fitness_effect, lost_bene_fitness_zscore, lost_bene_mut_strength, lost_dele_fitness_effect, lost_dele_fitness_zscore, lost_dele_mut_strength

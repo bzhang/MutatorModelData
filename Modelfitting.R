@@ -2,7 +2,7 @@ rm(list=ls())
 dataPath = "/Volumes/BigTwins/MutatorModelData/Core_Expo_M0.0_R0.0_G600000_N1000_BeneMR3.0E-5_DeleMR0.05_BeneE0.03_DeleE0.03_MutStr2_MutMR1.0E-4_AntiMutMR1.0E-5_MutaE0.03/"
 setwd(dataPath)
 
-files = files = system('ls *_Pop.txt', intern=T)
+files = system('ls *_Pop.txt', intern=T)
 cmd1 = 'sed 1d '
 cmd2_dele = " | awk -F '\t' '{print $6}'"
 cmd2_bene = " | awk -F '\t' '{print $8}'"
